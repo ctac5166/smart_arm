@@ -1,8 +1,5 @@
-import requests
-import json
-from flask import Flask, render_template, request, jsonify
-from test import coordinate_interpreter
-import csv
+from flask import Flask, render_template, jsonify
+from ax12.test import coordinate_interpreter
 
 # initializing a variable of Flask
 app = Flask(__name__)

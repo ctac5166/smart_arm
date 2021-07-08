@@ -12,14 +12,19 @@ def index():
     return jsonify("🌵 . . |=~this-is-empty~=| .. . 🌵")
 
 
-@app.route('/coords/pos/set', methods=['POST'])
+@app.route('/coords/pos/set', methods=['POST', 'GET'])
 def set_pos():
     global _rotInfo, _xyz
     if request.method == 'POST':
         data = request.json
         _xyz = data['xyz']
         # _rotInfo = data['rotInfo']
-    return jsonify("ok")
+        url = 'http://127.0.0.1:5001//coords/info/get'
+        data = {'xyz': _xyz, "rotInfo": _rotInfo}
+        return_data = requests.post(url, json=data)
+        if return_data.ok:
+            return return_data.json()
+    return jsonify("error")
 
 
 @app.route('/coords/info/get', methods=['GET'])
@@ -39,4 +44,4 @@ def set_rot():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, port=5000)

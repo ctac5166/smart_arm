@@ -84,6 +84,8 @@ def coordinate_interpreter(data):
     global _xyz, _new_pos
     _xyz = (data['x'],data['y'],data['z'])
     _new_pos = (data['x'],data['y'],data['z'])
+    exit_ = new_pos()
+    return exit_
 
 def main(motor_object, motor_object2, motor_object3, Q1, Q2, Q3, Q4):
     """ sets goal position based on user input """
@@ -144,6 +146,7 @@ def new_pos():
         # error = sim.simxSetJointTargetPosition(clientID, J_23, alf4, sim.simx_opmode_oneshot_wait)
         # GRIP(0, 0.03)
         # _xyz_new[1] = 0
+        return ["ok", alf1, alf2, alf3, alf4]
     except Exception:
         print("координаты сброшены до: [0.3,0,0.3]")
         _xyz = [0.1,0,0.1]
@@ -155,6 +158,7 @@ def new_pos():
         # error = sim.simxSetJointTargetPosition(clientID, J_12, alf2, sim.simx_opmode_oneshot_wait)
         # error = sim.simxSetJointTargetPosition(clientID, J_13, alf3, sim.simx_opmode_oneshot_wait)
         # error = sim.simxSetJointTargetPosition(clientID, J_23, alf4, sim.simx_opmode_oneshot_wait)
+        return ["error", alf1, alf2, alf3, alf4]
 
 
 
@@ -289,12 +293,31 @@ def runPyGame():
         print([round(v,3) for v in _new_pos])
         dt = fpsClock.tick(fps)
 
-runPyGame()
+# runPyGame() #запуск приложения для ручного упарвления
 
 
+from flask import Flask, request, render_template
+from flask import render_template, request, jsonify
 
 
+app = Flask(__name__)
 
+
+@app.route('/')
+def index():
+    return jsonify("🌵 . . |=~this-is-empty~=| .. . 🌵")
+
+
+@app.route('/coords/info/get', methods=['POST'])
+def get_info():
+    if request.method == 'POST':
+        data = request.json
+        return_ = coordinate_interpreter(data)
+    return jsonify({"return": str(return_[0]), "rotInfo": {return_[1:]}})
+
+
+if __name__ == "__main__":
+    app.run(debug=True, port=5001)
 
 
 # disconnect
