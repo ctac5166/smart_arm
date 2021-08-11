@@ -83,11 +83,10 @@ public class vr_server : MonoBehaviour
                     string sp = NumberFormatInfo.CurrentInfo.CurrencyDecimalSeparator;
                     return_text[1] = return_text[1].Replace(".", sp);
                     float float1 = float.Parse(return_text[1]);
-                    parts[4].transform.rotation = new Quaternion(
+                    parts[4].transform.eulerAngles = new Vector3(
                         -float1 * Mathf.Rad2Deg,
-                        0,
-                        0,
-                        0
+                        90,
+                        90
                     );
 
                     /*sp = NumberFormatInfo.CurrentInfo.CurrencyDecimalSeparator;
