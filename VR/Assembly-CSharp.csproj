@@ -58,12 +58,13 @@
   <ItemGroup>
     <Compile Include="Assets\vr_server.cs" />
     <Compile Include="Assets\FastIK\Scripts\FastIK\FastIKFabric.cs" />
+    <Compile Include="Assets\test.cs" />
     <Compile Include="Assets\FastIK\Scripts\FastIK\FastIKLook.cs" />
     <Compile Include="Assets\FastIK\Scripts\Sample\SampleProcedualAnimation.cs" />
     <Compile Include="Assets\FastIK\Scripts\Sample\SampleRotator.cs" />
     <Compile Include="Assets\FastIK\Scripts\FastIK\FastIKCCD.cs" />
     <Compile Include="Assets\FastIK\Scripts\Sample\SampleSinMover.cs" />
-    <Compile Include="Assets\test.cs" />
+    <Compile Include="Assets\webcam\Scripts\WebCam.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\FastIK\Documentation.txt" />
