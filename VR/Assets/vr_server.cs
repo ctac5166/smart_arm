@@ -8,8 +8,11 @@ using Valve.VR;
 
 public class vr_server : MonoBehaviour
 {
-    public Stea bool_y;
+    public bool button_y_bool;
+    public SteamVR_Action_Boolean button_y;
+    public manip_scr scr;
     public SteamVR_Action_Vector2 vector;
+    public SteamVR_Action_Vector2 vector2;
     public MeshRenderer mesh;
     public Vector3 coords_delay;
     [Range(1,100)]
@@ -26,13 +29,18 @@ public class vr_server : MonoBehaviour
     }
     void Update()
     {
+       // Debug.Log(transform.rotation.eulerAngles.z);
+        button_y_bool = button_y.active;
         opened += vector.axis.x * Time.deltaTime;
-        if(vector.axis.x * Time.deltaTime != 0) Debug.Log(vector.axis.x * Time.deltaTime);
+        //if(vector.axis.x * Time.deltaTime != 0) Debug.Log(vector.axis.x * Time.deltaTime);
         if (opened > 1) opened = 1;
         if (opened < 0) opened = 0;
 
-        opened2 += vector.axis.y * Time.deltaTime;
-        if (vector.axis.y * Time.deltaTime != 0) Debug.Log(vector.axis.y * Time.deltaTime);
+        Debug.Log(transform.eulerAngles.y);
+
+        //opened2 = (360 - transform.eulerAngles.z)/175;
+        opened2 += vector2.axis.x * Time.deltaTime;
+        //if (vector.axis.y * Time.deltaTime != 0) Debug.Log(vector.axis.y * Time.deltaTime);
         if (opened2 > 1) opened2 = 1;
         if (opened2 < 0) opened2 = 0;
     }
@@ -50,7 +58,7 @@ public class vr_server : MonoBehaviour
             myObject.rotation = transform.eulerAngles.y;
             myObject.rotation2 = opened2 * 360;
             string json = JsonUtility.ToJson(myObject);
-            //Debug.Log(json);
+            Debug.Log(json);
 
             var uwr = new UnityWebRequest(url, "POST");
             byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(json);
@@ -90,48 +98,21 @@ public class vr_server : MonoBehaviour
                     string sp = NumberFormatInfo.CurrentInfo.CurrencyDecimalSeparator;
                     return_text[1] = return_text[1].Replace(".", sp);
                     float float1 = float.Parse(return_text[1]);
-                    parts[4].transform.eulerAngles = new Vector3(
-                        0,
-                        -float1 * Mathf.Rad2Deg,
-                        0
-                    );
+                    scr.alf1 = -float1 * Mathf.Rad2Deg;
 
-                    sp = NumberFormatInfo.CurrentInfo.CurrencyDecimalSeparator;
-                    return_text[2] = return_text[2].Replace(".", sp);
-                    float1 = float.Parse(return_text[2]);
-                    parts[0].transform.eulerAngles = new Vector3(
-                        -float1 * Mathf.Rad2Deg,
-                        0,
-                        0
-                    );
+                    return_text[1] = return_text[1].Replace(".", sp);
+                    float1 = float.Parse(return_text[1]);
+                    scr.table = -float1 * Mathf.Rad2Deg + 90;
 
-                    sp = NumberFormatInfo.CurrentInfo.CurrencyDecimalSeparator;
                     return_text[3] = return_text[3].Replace(".", sp);
                     float1 = float.Parse(return_text[3]);
-
-                    Debug.Log(-float1 * Mathf.Rad2Deg);
-
-                    parts[2].transform.eulerAngles = new Vector3(
-                        -float1 * Mathf.Rad2Deg,
-                        0,
-                        0
-                    );
+                    scr.alf2 = -float1 * Mathf.Rad2Deg;
 
                     return_text[4] = return_text[4].Replace(".", sp);
                     float1 = float.Parse(return_text[4]);
-                    parts[3].transform.eulerAngles = new Vector3(
-                        myObject.rotation2,
-                        0,
-                        0
-                    );
-                    /*
-                    return_text[3] = return_text[3].Replace(".", sp);
-                    float1 = float.Parse(return_text[3]);
-                    parts[2].transform.eulerAngles = new Vector3(
-                        -float1 * Mathf.Rad2Deg,
-                        0,
-                        0
-                    );*/
+                    scr.alf3 = -float1 * Mathf.Rad2Deg;
+                    scr.alf3 = opened2 * 180 - 90;
+                    scr.grab_open = 40 - (opened * 40);
 
                     mesh.material.color = Color.green;
                 }

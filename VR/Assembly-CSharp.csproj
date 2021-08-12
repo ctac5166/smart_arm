@@ -65,6 +65,7 @@
     <Compile Include="Assets\FastIK\Scripts\FastIK\FastIKCCD.cs" />
     <Compile Include="Assets\FastIK\Scripts\Sample\SampleSinMover.cs" />
     <Compile Include="Assets\webcam\Scripts\WebCam.cs" />
+    <Compile Include="Assets\Manip\manip_scr.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\FastIK\Documentation.txt" />

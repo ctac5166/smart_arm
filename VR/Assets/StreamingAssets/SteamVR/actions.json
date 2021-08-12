@@ -59,6 +59,10 @@
       "requirement": "suggested"
     },
     {
+      "name": "/actions/default/in/touchright",
+      "type": "vector2"
+    },
+    {
       "name": "/actions/default/out/Haptic",
       "type": "vibration"
     },

@@ -9,6 +9,7 @@ public class WebCam : MonoBehaviour
     WebCamTexture tex;
 
     public RawImage display;
+    public RawImage display2;
 
     public Text startStopText;
 
@@ -45,11 +46,18 @@ public class WebCam : MonoBehaviour
         }
         else // Start the camera
         {
-            WebCamDevice device = WebCamTexture.devices[currentCamIndex];
+            WebCamDevice device = WebCamTexture.devices[1];
             tex = new WebCamTexture(device.name);
             display.texture = tex;
 
             tex.Play();
+
+            WebCamDevice device2 = WebCamTexture.devices[0];
+            tex = new WebCamTexture(device2.name);
+            display2.texture = tex;
+
+            tex.Play();
+
             startStopText.text = "Stop Camera";
         }
     }
