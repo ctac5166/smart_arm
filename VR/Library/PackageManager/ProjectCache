@@ -5,16 +5,16 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637637596203659727
-    m_Hash: 1024589204
+      ticks: 637643588901680764
+    m_Hash: 2858840045
   m_LockFileStatus:
     m_FilePath: C:/Users/User/Downloads/smart-arm/VR/Packages/packages-lock.json
     m_PathExists: 1
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637637596203729729
-    m_Hash: 1221983708
+      ticks: 637643588901680764
+    m_Hash: 1296157183
 m_EmbeddedPackageManifests:
   m_ManifestsStatus: {}
 m_PackageAssets:
@@ -1386,7 +1386,7 @@ m_PackageAssets:
       isDirectDependency: 1
       version: 1.1.4
       source: 6
-      resolvedPath: C:\Users\User\Downloads\smart-arm\VR\Library\PackageCache\com.valvesoftware.unity.openvr@dbc144ce8a22-1614121125000
+      resolvedPath: C:\Users\User\Downloads\smart-arm\VR\Library\PackageCache\com.valvesoftware.unity.openvr@dbc144ce8a22-1628762082824
       assetPath: Packages/com.valvesoftware.unity.openvr
       name: com.valvesoftware.unity.openvr
       displayName: OpenVR XR Plugin
@@ -3825,7 +3825,7 @@ m_PackageAssets:
       m_ContentTrackingEnabled: 1
       m_ModificationDate:
         serializedVersion: 2
-        ticks: 637497179250000000
+        ticks: 637643588828241072
       m_Hash: 2919789393
 m_ProjectPath: C:/Users/User/Downloads/smart-arm/VR/Packages
 m_EditorVersion: 2020.3.15f2 (6cf78cb77498)

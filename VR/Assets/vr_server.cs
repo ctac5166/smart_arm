@@ -10,11 +10,13 @@ public class vr_server : MonoBehaviour
 {
     public bool button_y_bool;
     public SteamVR_Action_Boolean button_y;
+    public SteamVR_Action_Boolean button_x;
     public manip_scr scr;
     public SteamVR_Action_Vector2 vector;
     public SteamVR_Action_Vector2 vector2;
     public MeshRenderer mesh;
     public Vector3 coords_delay;
+    public float rotation_;
     [Range(1,100)]
     public int speed;
     public float multiplayer;
@@ -22,23 +24,28 @@ public class vr_server : MonoBehaviour
     Vector3 start_pos;
     public float opened = 0;
     public float opened2 = 0;
+    public SteamVR_Input_Sources handType;
     private void Start()
     {
         start_pos = transform.position;
+
+        button_y.AddOnStateUpListener(TriggerUpY, handType);
+        button_x.AddOnStateUpListener(TriggerUpX, handType);
+
         StartCoroutine(PostRequest("http://192.168.0.109:5000/pos/set/vr"));
+    }
+    public void TriggerUpY(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
+    {
+        if (opened > 0) opened = 0;
+        else opened = 0.8f;
+    }
+    public void TriggerUpX(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
+    {
+        rotation_ += 90;
+        if (rotation_>360) rotation_ = 0;
     }
     void Update()
     {
-       // Debug.Log(transform.rotation.eulerAngles.z);
-        button_y_bool = button_y.active;
-        opened += vector.axis.x * Time.deltaTime;
-        //if(vector.axis.x * Time.deltaTime != 0) Debug.Log(vector.axis.x * Time.deltaTime);
-        if (opened > 1) opened = 1;
-        if (opened < 0) opened = 0;
-
-        Debug.Log(transform.eulerAngles.y);
-
-        //opened2 = (360 - transform.eulerAngles.z)/175;
         opened2 += vector2.axis.x * Time.deltaTime;
         //if (vector.axis.y * Time.deltaTime != 0) Debug.Log(vector.axis.y * Time.deltaTime);
         if (opened2 > 1) opened2 = 1;
@@ -55,7 +62,7 @@ public class vr_server : MonoBehaviour
             myObject.xyz.Add((gameObject.transform.position.y - start_pos.y) * multiplayer + coords_delay.y);
             myObject.speed = speed;
             myObject.opened = opened;
-            myObject.rotation = transform.eulerAngles.y;
+            myObject.rotation = rotation_;
             myObject.rotation2 = opened2 * 360;
             string json = JsonUtility.ToJson(myObject);
             Debug.Log(json);
@@ -96,8 +103,8 @@ public class vr_server : MonoBehaviour
                 else if (return_text[0] == "ok")
                 {
                     string sp = NumberFormatInfo.CurrentInfo.CurrencyDecimalSeparator;
-                    return_text[1] = return_text[1].Replace(".", sp);
-                    float float1 = float.Parse(return_text[1]);
+                    return_text[2] = return_text[2].Replace(".", sp);
+                    float float1 = float.Parse(return_text[2]);
                     scr.alf1 = -float1 * Mathf.Rad2Deg;
 
                     return_text[1] = return_text[1].Replace(".", sp);
@@ -110,13 +117,13 @@ public class vr_server : MonoBehaviour
 
                     return_text[4] = return_text[4].Replace(".", sp);
                     float1 = float.Parse(return_text[4]);
-                    scr.alf3 = -float1 * Mathf.Rad2Deg;
+                    scr.alf3 = opened2 * 360;
                     scr.alf3 = opened2 * 180 - 90;
                     scr.grab_open = 40 - (opened * 40);
 
                     mesh.material.color = Color.green;
                 }
-            } 
+            }
         }
     }
 }
