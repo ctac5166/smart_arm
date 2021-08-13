@@ -19,6 +19,10 @@ public class manip_scr : MonoBehaviour
     [Range(-275, 275)]
     public float alf3;
     public Transform alf3_bone;
+    [Space(25)]
+    [Range(-275, 275)]
+    public float alf4;
+    public Transform alf4_bone;
     //[Space(25)]
     //[Range(-275, 275)]
     //public float grab1;
@@ -39,19 +43,22 @@ public class manip_scr : MonoBehaviour
             0,
             table, 0);
         alf1_bone.transform.eulerAngles = new Vector3(
-            0,
-            table, alf1);
+            alf1,
+            table, 0);
         alf2_bone.transform.eulerAngles = new Vector3(
-            0,
-            table, alf2+alf1);
+            alf2 + alf1,
+            table, 0);
         alf3_bone.transform.eulerAngles = new Vector3(
+            alf3 + alf2 + alf1,
+            table, 0);
+        alf4_bone.transform.localEulerAngles = new Vector3(
             0,
-            table, alf3+alf2+alf1);
-        grab1_bone.transform.eulerAngles = new Vector3(
-            0,
-            table, grab_open + alf3 + alf2 + alf1);
-        grab2_bone.transform.eulerAngles = new Vector3(
-            0,
-            table, -grab_open + alf3 + alf2 + alf1);
+            alf4, 0);
+        grab1_bone.transform.localEulerAngles = new Vector3(
+            grab_open, 0, 0
+            );
+        grab2_bone.transform.localEulerAngles = new Vector3(
+            -grab_open, 0,0
+            );
     }
 }

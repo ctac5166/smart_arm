@@ -135,8 +135,8 @@ def coordinate_interpreter(data):
 
     print(mathf_maxi(900, 2800, int(data['rot2']*10.555)))
     my_dxl4.set_goal_position(mathf_maxi(900, 2800, int(data['rot2']*10.555)))
-    print(int(data['rot']*13.7))
-    my_dxl5.set_goal_position(int(data['rot']*13.7))
+    print(int(data['rot']*2.841))
+    my_dxl5.set_goal_position(int(data['rot']*2.841))
     print('seted goal 6 - ', int(data['opened']*123+900))
     my_dxl6.set_goal_position(int(data['opened']*123+900))
 
@@ -190,13 +190,15 @@ def main(motor_object, motor_object2, motor_object3, motor_object4, Q1, Q2, Q3, 
         motor_object4.set_moving_speed(speed_mdx)
 
         motor_object.set_goal_position(inst_to_coof(Q1, zeros, coof))
-        motor_object2.set_goal_position(mathf_maxi(1250, 2980, inst_to_coof(Q2-(m.pi/2), zeros, coof)))
+        print(-inst_to_coof(Q1, zeros, coof), " motor2 qqq")
+        motor_object2.set_goal_position(mathf_maxi(1250, 2980, inst_to_coof(Q2, zeros, coof)))
+        # print(mathf_maxi(1250, 2980, inst_to_coof(Q2-(m.pi/2), zeros, coof)), " motor2 qqq")
         motor_object3.set_goal_position(mathf_maxi(1310, 3100, inst_to_coof(Q3-(m.pi/2), zeros, coof)))
         # motor_object4.set_goal_position(mathf_maxi(900, 2800, inst_to_coof(Q4, zeros, coof)))
         # print(zeros_2, "zeros_2")
         #
-        # print("Position of dxl ID: %d is now: %d " %
-        #       (motor_object.id, motor_object.get_present_position()))
+        print("Position of dxl ID: %d is now: %d " %
+              (motor_object2.id, motor_object2.get_present_position()))
         # print("Position of dxl ID: %d is now: %d " %
         #       (motor_object2.id, motor_object2.get_present_position()))
         # print("Position of dxl ID: 44%d is now: %d " %

@@ -67,6 +67,22 @@
       "type": "boolean"
     },
     {
+      "name": "/actions/default/in/buttno_freez_x",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/default/in/buttno_freez_y",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/default/in/buttno_freez_z",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/default/in/hand_pos_left",
+      "type": "vector3"
+    },
+    {
       "name": "/actions/default/out/Haptic",
       "type": "vibration"
     },

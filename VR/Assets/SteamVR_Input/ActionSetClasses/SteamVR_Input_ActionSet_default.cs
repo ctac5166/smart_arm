@@ -137,6 +137,38 @@ namespace Valve.VR
             }
         }
         
+        public virtual SteamVR_Action_Boolean buttno_freez_x
+        {
+            get
+            {
+                return SteamVR_Actions.default_buttno_freez_x;
+            }
+        }
+        
+        public virtual SteamVR_Action_Boolean buttno_freez_y
+        {
+            get
+            {
+                return SteamVR_Actions.default_buttno_freez_y;
+            }
+        }
+        
+        public virtual SteamVR_Action_Boolean buttno_freez_z
+        {
+            get
+            {
+                return SteamVR_Actions.default_buttno_freez_z;
+            }
+        }
+        
+        public virtual SteamVR_Action_Vector3 hand_pos_left
+        {
+            get
+            {
+                return SteamVR_Actions.default_hand_pos_left;
+            }
+        }
+        
         public virtual SteamVR_Action_Vibration Haptic
         {
             get
