@@ -82,7 +82,7 @@ public class vr_server : MonoBehaviour
     }
     public void TriggerUpX(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
     {
-        rotation_ += 90;
+        rotation_ += 10;
         if (rotation_>360) rotation_ = 0;
     }
     void Update()
@@ -108,7 +108,7 @@ public class vr_server : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(0.01f);
+            yield return new WaitForSeconds(0.005f);
             MyClass myObject = new MyClass();
             myObject.xyz.Add(((freez_sphere.transform.position.z * -1) + start_pos.z) * multiplayer + coords_delay.x);
             myObject.xyz.Add((freez_sphere.transform.position.x - start_pos.x) * multiplayer + coords_delay.z);
@@ -172,7 +172,7 @@ public class vr_server : MonoBehaviour
                     float1 = float.Parse(return_text[4]);
                     scr.alf3 = opened2 * 360;
                     scr.alf4 = rotation_;
-                    scr.alf3 = (opened2 * 180 + 180) - (180 - scr.alf1 - scr.alf2);
+                    scr.alf3 = (opened2 * 180 + 180) - (scr.alf1 + scr.alf2);
                     scr.grab_open = 40 - (opened * 40);
 
                     mesh.material.color = Color.green;

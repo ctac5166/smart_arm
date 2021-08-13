@@ -127,28 +127,28 @@ def user_input():
 
 def coordinate_interpreter(data):
     global _xyz, _new_pos, last_coords, speed_mdx
-    print(data, "datadatadata")
+    # print(data, "datadatadata")
 
     last_coords = _xyz;
     _xyz = (data['xyz'][0],data['xyz'][1],data['xyz'][2])
     _new_pos = (data['xyz'][0],data['xyz'][1],data['xyz'][2])
 
-    print(mathf_maxi(900, 2800, int(data['rot2']*10.555)))
-    my_dxl4.set_goal_position(mathf_maxi(900, 2800, int(data['rot2']*10.555)))
-    print(int(data['rot']*2.841))
+    # print(mathf_maxi(900, 2800, int(data['rot2']*10.555)))
+    # my_dxl4.set_goal_position(mathf_maxi(900, 2800, int(data['rot2']*10.555)))
+    # print(int(data['rot']*2.841))
     my_dxl5.set_goal_position(int(data['rot']*2.841))
-    print('seted goal 6 - ', int(data['opened']*123+900))
+    # print('seted goal 6 - ', int(data['opened']*123+900))
     my_dxl6.set_goal_position(int(data['opened']*123+900))
 
-    if speed_mdx != data['speed']:
-        speed_mdx = data['speed']
-        my_dxl.set_moving_speed(speed_mdx)
-        my_dxl2.set_moving_speed(speed_mdx)
-        my_dxl3.set_moving_speed(speed_mdx)
-        my_dxl4.set_moving_speed(speed_mdx)
-        my_dxl5.set_moving_speed(speed_mdx)
+    # if speed_mdx != data['speed']:
+    #     speed_mdx = data['speed']
+    #     my_dxl.set_moving_speed(speed_mdx)
+    #     my_dxl2.set_moving_speed(speed_mdx)
+    #     my_dxl3.set_moving_speed(speed_mdx)
+    #     my_dxl4.set_moving_speed(speed_mdx)
+    #     my_dxl5.set_moving_speed(speed_mdx)
 
-    exit_ = new_pos()
+    exit_ = new_pos(data)
     return exit_
 
 def mathf_maxi(min, max, val):
@@ -168,7 +168,7 @@ def inst_to_coof(Qcopy, zero_coof, coof):
     return Q_new
 
 
-def main(motor_object, motor_object2, motor_object3, motor_object4, Q1, Q2, Q3, Q4):
+def main(motor_object, motor_object2, motor_object3, motor_object4, Q1, Q2, Q3, Q4, data):
     global speed_mdx
     """ sets goal position based on user input """
     bool_test = True
@@ -190,15 +190,15 @@ def main(motor_object, motor_object2, motor_object3, motor_object4, Q1, Q2, Q3, 
         motor_object4.set_moving_speed(speed_mdx)
 
         motor_object.set_goal_position(inst_to_coof(Q1, zeros, coof))
-        print(-inst_to_coof(Q1, zeros, coof), " motor2 qqq")
+        # print(-inst_to_coof(Q1, zeros, coof), " motor2 qqq")
         motor_object2.set_goal_position(mathf_maxi(1250, 2980, inst_to_coof(Q2, zeros, coof)))
         # print(mathf_maxi(1250, 2980, inst_to_coof(Q2-(m.pi/2), zeros, coof)), " motor2 qqq")
         motor_object3.set_goal_position(mathf_maxi(1310, 3100, inst_to_coof(Q3-(m.pi/2), zeros, coof)))
-        # motor_object4.set_goal_position(mathf_maxi(900, 2800, inst_to_coof(Q4, zeros, coof)))
+        motor_object4.set_goal_position(mathf_maxi(900, 2800, int(math.degrees((math.radians(data['rot2']))-Q2-Q3)*10.555)))
         # print(zeros_2, "zeros_2")
         #
-        print("Position of dxl ID: %d is now: %d " %
-              (motor_object2.id, motor_object2.get_present_position()))
+        # print("Position of dxl ID: %d is now: %d " %
+        #       (motor_object2.id, motor_object2.get_present_position()))
         # print("Position of dxl ID: %d is now: %d " %
         #       (motor_object2.id, motor_object2.get_present_position()))
         # print("Position of dxl ID: 44%d is now: %d " %
@@ -210,7 +210,7 @@ def main(motor_object, motor_object2, motor_object3, motor_object4, Q1, Q2, Q3, 
 _xyz = [0.4, 0, 0.3]
 speed_mdx = 25
 last_key = ""
-def new_pos():
+def new_pos(data):
     global _xyz, last_key, _new_pos, last_coords
     # print('Введите X')
     # x_targ = float(input())
@@ -221,7 +221,7 @@ def new_pos():
     # print(_xyz)
     # grip = int(input())
     _xyz_new = _xyz
-    print(_xyz, "xyz")
+    # print(_xyz, "xyz")
     try:
         # if last_key == "y+" and _xyz_new[1] < 0.1 and _xyz_new[0] < 0.1 and _xyz_new[0] > -0.1: _xyz_new[1] = 0.2
         # elif last_key == "y-" and _xyz_new[1] < 0.1 and _xyz_new[0] < 0.1 and _xyz_new[0] > -0.1: _xyz_new[1] = -0.2
@@ -233,8 +233,8 @@ def new_pos():
         alf1, alf2, alf3 = OZK_3(_xyz[0],_xyz[1],_xyz[2])
         if _xyz[0] < 0:
             alf1 += 1.57*2
-        print(alf1, alf2, alf3, alf4)
-        main(my_dxl, my_dxl2, my_dxl3, my_dxl4, alf1, alf2, alf3, alf4)
+        # print(alf1, alf2, alf3, alf4)
+        main(my_dxl, my_dxl2, my_dxl3, my_dxl4, alf1, alf2, alf3, alf4, data)
         # error = sim.simxSetJointTargetPosition(clientID, J_01, alf1, sim.simx_opmode_oneshot_wait)
         # error = sim.simxSetJointTargetPosition(clientID, J_12, alf2, sim.simx_opmode_oneshot_wait)
         # error = sim.simxSetJointTargetPosition(clientID, J_13, alf3, sim.simx_opmode_oneshot_wait)
@@ -248,8 +248,8 @@ def new_pos():
             _new_pos = last_coords
             alf4 = 0
             alf1, alf2, alf3 = OZK_3(_xyz[0],_xyz[1],_xyz[2])
-            print(alf1, alf2, alf3, alf4)
-            main(my_dxl, my_dxl2, my_dxl3, my_dxl4, alf1, alf2, alf3, alf4)
+            # print(alf1, alf2, alf3, alf4)
+            main(my_dxl, my_dxl2, my_dxl3, my_dxl4, alf1, alf2, alf3, alf4, data)
             # my_dxl.set_torque_enable(0)
             # my_dxl2.set_torque_enable(0)
             # my_dxl3.set_torque_enable(0)
@@ -259,13 +259,13 @@ def new_pos():
             # Ax12.disconnect()
             return ["tomuch", alf1, alf2, alf3, alf4]
         except Exception:
-            print("координаты сброшены до: [0.3,0,0.3]")
+            # print("координаты сброшены до: [0.3,0,0.3]")
             _xyz = [0.1,0,0.4]
             _new_pos = [0.1,0,0.4,0,0]
             alf4 = 0
             alf1, alf2, alf3 = OZK_3(_xyz[0],_xyz[1],_xyz[2])
-            print(alf1, alf2, alf3, alf4)
-            main(my_dxl, my_dxl2, my_dxl3, my_dxl4, alf1, alf2, alf3, alf4)
+            # print(alf1, alf2, alf3, alf4)
+            main(my_dxl, my_dxl2, my_dxl3, my_dxl4, alf1, alf2, alf3, alf4, data)
             # error = sim.simxSetJointTargetPosition(clientID, J_01, alf1, sim.simx_opmode_oneshot_wait)
             # error = sim.simxSetJointTargetPosition(clientID, J_12, alf2, sim.simx_opmode_oneshot_wait)
             # error = sim.simxSetJointTargetPosition(clientID, J_13, alf3, sim.simx_opmode_oneshot_wait)
@@ -425,16 +425,16 @@ def index():
 
 @app.route('/coords/info/get', methods=['POST', 'GET'])
 def get_info():
-    print("start")
+    # print("start")
     data = request.json
-    print(data)
+    # print(data)
     return_ = coordinate_interpreter(data)
-    print(return_, "return_")
-    print(math.degrees(return_[1]), math.degrees(return_[2]), math.degrees(return_[3]), math.degrees(return_[4]), "return_")
+    # print(return_, "return_")
+    # print(math.degrees(return_[1]), math.degrees(return_[2]), math.degrees(return_[3]), math.degrees(return_[4]), "return_")
     coof = 13.7
     # zeros = 2049.5
     zeros = 4096 / 2
-    print(inst_to_coof(return_[1], zeros, coof), inst_to_coof(return_[2], zeros, coof), inst_to_coof(return_[3], zeros, coof), inst_to_coof(return_[4], zeros, coof), "return_")
+    # print(inst_to_coof(return_[1], zeros, coof), inst_to_coof(return_[2], zeros, coof), inst_to_coof(return_[3], zeros, coof), inst_to_coof(return_[4], zeros, coof), "return_")
     return jsonify({"return": str(return_[0]), "rotInfo": [return_[1],return_[2],return_[3],return_[4]]})
 
 
