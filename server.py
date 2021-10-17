@@ -3,7 +3,6 @@ from flask import Flask, Response, request, render_template
 from flask import render_template, request, jsonify
 import requests
 import sqlite3
-import cv2
 import threading
 
 
@@ -57,9 +56,37 @@ def db_set_new_info(component_to_selected, selected_group, name_of_column, where
     db_set_new_info(component_to_selected, selected_group, name_of_column, where_comp_value, new_data)
 
 
-@app.route('/', methods=["GET"])
-def index():
-    return "hello!"
+all_data = {}
+return_data = ''
+
+
+@app.route("/")
+def hello():
+   return "<h1 style='color:blue'>hi</h1>"
+
+
+@app.route('/set_info', methods=['POST', 'GET'])
+def set_info():
+    global _rotInfo, _xyz, all_data
+
+    data = request.json
+
+    # _xyz = data['xyz']
+    # _rotInfo = data['rotInfo']
+
+    data = {'xyz': _xyz, 'speed': data['speed'], 'rot': data['rotation'], 'opened': data['opened'],
+            "rot2": data['rotation2']}
+
+    all_data = data
+    print('all ok')
+    # all_data = requests.post(url, json=data)
+    return 'ok'
+
+
+@app.route('/get_info', methods=['POST', 'GET'])
+def get_info():
+    global _rotInfo, _xyz, all_data
+    return  all_data
 
 
 @app.route('/get_speed', methods=['POST', 'GET'])
@@ -183,4 +210,4 @@ def set_native_info():
 
 
 if __name__ == "__main__":
-    app.run(host="192.168.0.109",debug=True, port=5000)
+    app.run(host="192.168.0.103",debug=True, port=5000)
