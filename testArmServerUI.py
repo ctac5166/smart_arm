@@ -374,7 +374,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return "🌵 . . |=~this-is-empty~=| .. . 🌵"
+    return "🌵 . . |= this-is-empty~=| .. . 🌵"
 
 
 @app.route('/coords/info/get', methods=['POST', 'GET'])

@@ -8,6 +8,7 @@ l2 = 0.2
 l3 = 0.135
 l4 = 0.205
 # l4 = 0.16
+# l4 = 0.16
 
 a1=0
 a2=30
@@ -41,19 +42,9 @@ def OZK_4(x,y,z):
 
 def OZK_2(x,y,z):
 
-    # z=z-l1
-    # B = m.sqrt(x**2 + z**2)
-    # q1 = m.atan2(z, x)
-    # q2 = m.acos((l2**2 - l3**2 + B**2)/(2*B*l2))
-    # Q1 = q1+q2
-    # Q2 = m.pi-m.acos((l2**2 + l3**2 - B**2)/(2*l2*l3))
+    print("ON ENTER: ", x,y,z)
 
-    # al2 = m.pi/2 - Q1
-    # al3 = Q2
-    #
-    # al4 = m.atan(y/x)
-
-    a1 = m.atan(y/x)
+    a1 = m.atan(y / x)
     a5 = a1
     k = m.sqrt(x ** 2 + y ** 2)
     zp = z + l4 - l1
@@ -125,25 +116,32 @@ def user_input():
     else:
         return True
 
+_xyz = [0.1, 0, 0.27]
+
 def coordinate_interpreter(data):
     global _xyz, _new_pos, last_coords, speed_mdx
     print(data, "datadatadata")
 
     last_coords = _xyz;
-    _xyz = (data['xyz'][0],data['xyz'][1],data['xyz'][2])
+    print(data['xyz'], 'data xzy')
     _new_pos = (data['xyz'][0],data['xyz'][1],data['xyz'][2])
+    _xyz = _new_pos
 
-    my_dxl5.set_goal_position(int(data['rot']*13.7))
-    print('seted goal 6 - ', int(data['opened']*123+900))
-    my_dxl6.set_goal_position(int(data['opened']*123+900))
+    my_dxl5.set_goal_position(int(820+data['rot']*(-620/180)))
+    my_dxl6.set_goal_position(int(850+data['opened']*150))
 
-    # if speed_mdx != data['speed']:
-    #     speed_mdx = data['speed']
-    #     my_dxl.set_moving_speed(speed_mdx)
-    #     my_dxl2.set_moving_speed(speed_mdx)
-    #     my_dxl3.set_moving_speed(speed_mdx)
-    #     my_dxl4.set_moving_speed(speed_mdx)
-    #     my_dxl5.set_moving_speed(speed_mdx)
+    coof = 13.7
+    zeros = 4096 / 2
+
+    my_dxl4.set_goal_position(mathf_maxi(900, 2800, inst_to_coof(data['rot2'], zeros, coof)))
+
+    if speed_mdx != data['speed']:
+        speed_mdx = int(data['speed'])
+        my_dxl.set_moving_speed(speed_mdx)
+        my_dxl2.set_moving_speed(speed_mdx)
+        my_dxl3.set_moving_speed(speed_mdx)
+        my_dxl4.set_moving_speed(speed_mdx)
+        my_dxl5.set_moving_speed(speed_mdx)
 
     exit_ = new_pos()
     return exit_
@@ -157,51 +155,27 @@ def mathf_maxi(min, max, val):
 
 
 def inst_to_coof(Qcopy, zero_coof, coof):
-    # print(zero_coof, Qcopy, coof, "info def")
-    # print(m.degrees(Qcopy)*coof, "Q*coof")
-    # print(zero_coof, "zero_coof/2")
     Q_new = int(zero_coof - (m.degrees(Qcopy))*coof)
-    # print(Q_new, "Q_new")
     return Q_new
 
 
 def main(motor_object, motor_object2, motor_object3, motor_object4, Q1, Q2, Q3, Q4):
-    """ sets goal position based on user input """
+
     bool_test = True
     while bool_test:
-        # print("Position of dxl ID: %d is now: %d " %
-        #       (motor_object.id, motor_object.get_present_position()))
-        # print("Position of dxl ID: %d is now: %d " %
-        #       (motor_object2.id, motor_object2.get_present_position()))
-        # print("Position of dxl ID: %d is now: %d " %
-        #       (motor_object3.id, motor_object3.get_present_position()))
-
         coof = 13.7
-        # zeros = 2049.5
-        zeros = 4096/2
+        zeros = 4096 / 2
 
-        motor_object.set_moving_speed(speed)
-        motor_object2.set_moving_speed(speed)
-        motor_object3.set_moving_speed(speed)
-        motor_object4.set_moving_speed(speed)
+        print("ON ENTER DATA MANIP: ", m.degrees(Q1), m.degrees(Q2), m.degrees(Q3), m.degrees(Q4))
 
         motor_object.set_goal_position(inst_to_coof(Q1, zeros, coof))
         motor_object2.set_goal_position(mathf_maxi(1250, 2980, inst_to_coof(Q2, zeros, coof)))
-        motor_object3.set_goal_position(mathf_maxi(1310, 3100, inst_to_coof(Q3-(m.pi/2), zeros, coof)))
-        motor_object4.set_goal_position(mathf_maxi(900, 2800, inst_to_coof(Q4, zeros, coof)))
-        # print(zeros_2, "zeros_2")
-        #
-        # print("Position of dxl ID: %d is now: %d " %
-        #       (motor_object.id, motor_object.get_present_position()))
-        # print("Position of dxl ID: %d is now: %d " %
-        #       (motor_object2.id, motor_object2.get_present_position()))
-        # print("Position of dxl ID: 44%d is now: %d " %
-        #       (motor_object3.id, motor_object3.get_present_position()))
+        motor_object3.set_goal_position(mathf_maxi(1310, 3100, inst_to_coof(Q3 - (m.pi / 2), zeros, coof)))
+
         bool_test = False
 
 # pass in AX12 object
 
-_xyz = [0.4, 0, 0.3]
 speed_mdx = 25
 last_key = ""
 def new_pos():
@@ -216,60 +190,64 @@ def new_pos():
     # grip = int(input())
     _xyz_new = _xyz
     print(_xyz, "xyz")
-    try:
+    # try:
         # if last_key == "y+" and _xyz_new[1] < 0.1 and _xyz_new[0] < 0.1 and _xyz_new[0] > -0.1: _xyz_new[1] = 0.2
         # elif last_key == "y-" and _xyz_new[1] < 0.1 and _xyz_new[0] < 0.1 and _xyz_new[0] > -0.1: _xyz_new[1] = -0.2
         # if _xyz[0] < 0.1 and _xyz[0] > -0.1:
         #     if last_key == "x+":
         #         _xyz[0] = -0.1
         #     else: _xyz[0] = 0.1
-        alf4 = 0
-        alf1, alf2, alf3, alf4 = OZK_2(_xyz[0],_xyz[1],_xyz[2])
-        if _xyz[0] < 0:
-            alf1 += 1.57*2
-        print(alf1, alf2, alf3, alf4)
-        main(my_dxl, my_dxl2, my_dxl3, my_dxl4, alf1, alf2, alf3, alf4)
-        # error = sim.simxSetJointTargetPosition(clientID, J_01, alf1, sim.simx_opmode_oneshot_wait)
-        # error = sim.simxSetJointTargetPosition(clientID, J_12, alf2, sim.simx_opmode_oneshot_wait)
-        # error = sim.simxSetJointTargetPosition(clientID, J_13, alf3, sim.simx_opmode_oneshot_wait)
-        # error = sim.simxSetJointTargetPosition(clientID, J_23, alf4, sim.simx_opmode_oneshot_wait)
-        # GRIP(0, 0.03)
-        # _xyz_new[1] = 0
-        return ["ok", alf1, alf2, alf3, alf4]
-    except Exception:
-        try:
-            _xyz = last_coords
-            _new_pos = last_coords
-            alf1, alf2, alf3, alf4 = OZK_2(_xyz[0],_xyz[1],_xyz[2])
-            print(alf1, alf2, alf3, alf4)
-            main(my_dxl, my_dxl2, my_dxl3, my_dxl4, alf1, alf2, alf3, alf4)
-            # my_dxl.set_torque_enable(0)
-            # my_dxl2.set_torque_enable(0)
-            # my_dxl3.set_torque_enable(0)
-            # my_dxl4.set_torque_enable(0)
-            # my_dxl5.set_torque_enable(0)
-            # # my_dxl2.set_torque_enable(0)
-            # Ax12.disconnect()
-            return ["tomuch", alf1, alf2, alf3, alf4]
-        except Exception:
-            print("координаты сброшены до: [0.3,0,0.3]")
-            _xyz = [0.2,0,0.3]
-            _new_pos = [0.2,0,0.3,0,0]
-            alf1, alf2, alf3, alf4 = OZK_2(_xyz[0],_xyz[1],_xyz[2])
-            print(alf1, alf2, alf3, alf4)
-            main(my_dxl, my_dxl2, my_dxl3, my_dxl4, alf1, alf2, alf3, alf4)
-            # error = sim.simxSetJointTargetPosition(clientID, J_01, alf1, sim.simx_opmode_oneshot_wait)
-            # error = sim.simxSetJointTargetPosition(clientID, J_12, alf2, sim.simx_opmode_oneshot_wait)
-            # error = sim.simxSetJointTargetPosition(clientID, J_13, alf3, sim.simx_opmode_oneshot_wait)
-            # error = sim.simxSetJointTargetPosition(clientID, J_23, alf4, sim.simx_opmode_oneshot_wait)
-            # my_dxl.set_torque_enable(0)
-            # my_dxl2.set_torque_enable(0)
-            # my_dxl3.set_torque_enable(0)
-            # my_dxl4.set_torque_enable(0)
-            # my_dxl5.set_torque_enable(0)
-            # # my_dxl2.set_torque_enable(0)
-            # Ax12.disconnect()
-            return ["error", alf1, alf2, alf3, alf4]
+    alf4 = 0
+    alf1, alf2, alf3, alf4 = OZK_2(_xyz[0],_xyz[1],_xyz[2])
+    if _xyz[0] < 0:
+        alf1 += 1.57*2
+    print(alf1, alf2, alf3, alf4)
+    main(my_dxl, my_dxl2, my_dxl3, my_dxl4, alf1, alf2, alf3, alf4)
+    # error = sim.simxSetJointTargetPosition(clientID, J_01, alf1, sim.simx_opmode_oneshot_wait)
+    # error = sim.simxSetJointTargetPosition(clientID, J_12, alf2, sim.simx_opmode_oneshot_wait)
+    # error = sim.simxSetJointTargetPosition(clientID, J_13, alf3, sim.simx_opmode_oneshot_wait)
+    # error = sim.simxSetJointTargetPosition(clientID, J_23, alf4, sim.simx_opmode_oneshot_wait)
+    # GRIP(0, 0.03)
+    # _xyz_new[1] = 0
+    return ["ok", alf1, alf2, alf3, alf4]
+    # except Exception:
+    #     try:
+    #         _xyz = last_coords
+    #         _new_pos = last_coords
+    #         alf1, alf2, alf3, alf4 = OZK_2(_xyz[0],_xyz[1],_xyz[2])
+    #         print(alf1, alf2, alf3, alf4)
+    #         main(my_dxl, my_dxl2, my_dxl3, my_dxl4, alf1, alf2, alf3, alf4)
+    #         # my_dxl.set_torque_enable(0)
+    #         # my_dxl2.set_torque_enable(0)
+    #         # my_dxl3.set_torque_enable(0)
+    #         # my_dxl4.set_torque_enable(0)
+    #         # my_dxl5.set_torque_enable(0)
+    #         # # my_dxl2.set_torque_enable(0)
+    #         # Ax12.disconnect()
+    #         return ["tomuch", alf1, alf2, alf3, alf4]
+    #     except Exception:
+    #         print("координаты сброшены до: [0.3,0,0.3]")
+    #         _xyz = [0.2,0,0.3]
+    #         _new_pos = [0.2,0,0.3,0,0]
+    #         alf1, alf2, alf3, alf4 = 0,0,0,0
+    #         try:
+    #             alf1, alf2, alf3, alf4 = OZK_2(_xyz[0],_xyz[1],_xyz[2])
+    #             print(alf1, alf2, alf3, alf4)
+    #             main(my_dxl, my_dxl2, my_dxl3, my_dxl4, alf1, alf2, alf3, alf4)
+    #         except Exception:
+    #             print('error coords')
+    #         # error = sim.simxSetJointTargetPosition(clientID, J_01, alf1, sim.simx_opmode_oneshot_wait)
+    #         # error = sim.simxSetJointTargetPosition(clientID, J_12, alf2, sim.simx_opmode_oneshot_wait)
+    #         # error = sim.simxSetJointTargetPosition(clientID, J_13, alf3, sim.simx_opmode_oneshot_wait)
+    #         # error = sim.simxSetJointTargetPosition(clientID, J_23, alf4, sim.simx_opmode_oneshot_wait)
+    #         # my_dxl.set_torque_enable(0)
+    #         # my_dxl2.set_torque_enable(0)
+    #         # my_dxl3.set_torque_enable(0)
+    #         # my_dxl4.set_torque_enable(0)
+    #         # my_dxl5.set_torque_enable(0)
+    #         # # my_dxl2.set_torque_enable(0)
+    #         # Ax12.disconnect()
+    #         return ["error", alf1, alf2, alf3, alf4]
 
 
 import sys
@@ -403,65 +381,104 @@ def runPyGame():
 # runPyGame() #запуск приложения для ручного упарвления
 
 
-from flask import Flask, request, render_template
-from flask import render_template, request, jsonify
+# from flask import Flask, request, render_template
+# from flask import render_template, request, jsonify
+#
+#
+# app = Flask(__name__)
+#
+#
+# @app.route('/')
+# def index():
+#     return "🌵 . . |=~this-is-empty~=| .. . 🌵"
+#
+#
+# @app.route('/coords/info/get', methods=['POST', 'GET'])
+# def get_info():
+#     print("start")
+#     data = request.json
+#     print(data)
+#     return_ = coordinate_interpreter(data)
+#     print(return_, "return_")
+#     print(math.degrees(return_[1]), math.degrees(return_[2]), math.degrees(return_[3]), math.degrees(return_[4]), "return_")
+#     coof = 13.7
+#     # zeros = 2049.5
+#     zeros = 4096 / 2
+#     print(inst_to_coof(return_[1], zeros, coof), inst_to_coof(return_[2], zeros, coof), inst_to_coof(return_[3], zeros, coof), inst_to_coof(return_[4], zeros, coof), "return_")
+#     return jsonify({"return": str(return_[0]), "rotInfo": [return_[1],return_[2],return_[3],return_[4]]})
+#
+#
+# @app.route('/get_temperature', methods=['GET, POST'])
+# def get_temp():
+#     global my_dxl, my_dxl2, my_dxl3, my_dxl4, my_dxl5
+#
+#     temperature_list = list()
+#
+#     temperature_list.append(my_dxl.get_temperature())
+#     temperature_list.append(my_dxl2.get_temperature())
+#     temperature_list.append(my_dxl3.get_temperature())
+#     temperature_list.append(my_dxl4.get_temperature())
+#     temperature_list.append(my_dxl5.get_temperature())
+#
+#     return jsonify({"temperature": temperature_list})
+#
+#
+# @app.route('/get_speed', methods=['GET, POST'])
+# def get_speed():
+#     global my_dxl, my_dxl2, my_dxl3, my_dxl4, my_dxl5
+#
+#     speed_list = list()
+#
+#     speed_list.append(my_dxl.get_present_speed())
+#     speed_list.append(my_dxl2.get_present_speed())
+#     speed_list.append(my_dxl3.get_present_speed())
+#     speed_list.append(my_dxl4.get_present_speed())
+#     speed_list.append(my_dxl5.get_present_speed())
+#
+#     return jsonify({"speed": speed_list})
+#
+#
+# if __name__ == "__main__":
+#     app.run(host="192.168.0.23", debug=True, port=8080)
 
 
-app = Flask(__name__)
+import threading
+import requests
+import time
 
 
-@app.route('/')
-def index():
-    return "🌵 . . |=~this-is-empty~=| .. . 🌵"
+def loop():
+    while True:
+        url = 'http://192.168.120.79:5000//get_info'
+        data = {'userid': '0.0.0.0'}
+        return_data = requests.post(url, json=data)
+        if return_data.ok:
+            data_json = return_data.json()
+            if data_json != 404:
+                return_ = coordinate_interpreter(data_json)
+                print(return_, "return_")
+                print(math.degrees(return_[1]), math.degrees(return_[2]), math.degrees(return_[3]), math.degrees(return_[4]), "return_")
+                coof = 13.7
+                # zeros = 2049.5
+                zeros = 4096 / 2
+                print(inst_to_coof(return_[1], zeros, coof), inst_to_coof(return_[2], zeros, coof), inst_to_coof(return_[3], zeros, coof), inst_to_coof(return_[4], zeros, coof), "return_")
+                new_data = {'userid': '0.0.0.0', "return": str(return_[0]),
+                            "table_rot": return_[1],
+                            "alf_rots": [return_[2], return_[3], return_[4]],
+                            "rotInfo": [return_[1], return_[2], return_[3], return_[4]]}
+
+                url = 'http://192.168.120.79:5000//set_info_manip'
+                data = new_data
+                return_data = requests.post(url, json=data)
+            if return_data.ok:
+                print(return_data.text)
+        else:
+            time.sleep(0.1)
+        time.sleep(0.1)
 
 
-@app.route('/coords/info/get', methods=['POST', 'GET'])
-def get_info():
-    print("start")
-    data = request.json
-    print(data)
-    return_ = coordinate_interpreter(data)
-    print(return_, "return_")
-    print(math.degrees(return_[1]), math.degrees(return_[2]), math.degrees(return_[3]), math.degrees(return_[4]), "return_")
-    coof = 13.7
-    # zeros = 2049.5
-    zeros = 4096 / 2
-    print(inst_to_coof(return_[1], zeros, coof), inst_to_coof(return_[2], zeros, coof), inst_to_coof(return_[3], zeros, coof), inst_to_coof(return_[4], zeros, coof), "return_")
-    return jsonify({"return": str(return_[0]), "rotInfo": [return_[1],return_[2],return_[3],return_[4]]})
-
-
-@app.route('/get_temperature', methods=['GET, POST'])
-def get_temp():
-    global my_dxl, my_dxl2, my_dxl3, my_dxl4, my_dxl5
-
-    temperature_list = list()
-
-    temperature_list.append(my_dxl.get_temperature())
-    temperature_list.append(my_dxl2.get_temperature())
-    temperature_list.append(my_dxl3.get_temperature())
-    temperature_list.append(my_dxl4.get_temperature())
-    temperature_list.append(my_dxl5.get_temperature())
-
-    return jsonify({"temperature": temperature_list})
-
-
-@app.route('/get_speed', methods=['GET, POST'])
-def get_speed():
-    global my_dxl, my_dxl2, my_dxl3, my_dxl4, my_dxl5
-
-    speed_list = list()
-
-    speed_list.append(my_dxl.get_present_speed())
-    speed_list.append(my_dxl2.get_present_speed())
-    speed_list.append(my_dxl3.get_present_speed())
-    speed_list.append(my_dxl4.get_present_speed())
-    speed_list.append(my_dxl5.get_present_speed())
-
-    return jsonify({"speed": speed_list})
-
-
-if __name__ == "__main__":
-    app.run(host="192.168.0.23", debug=True, port=8080)
+threading.Thread(target=loop, daemon=True).start()
+input('Press <Enter> to exit.')
 
 
 # disconnect

@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/smart-arm.iml" filepath="$PROJECT_DIR$/.idea/smart-arm.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/all_need.iml" filepath="$PROJECT_DIR$/.idea/all_need.iml" />
     </modules>
   </component>
 </project>
